@@ -58,3 +58,45 @@ function formatDate(isoString) {
     const month = String(date.getMonth() + 1).padStart(2, '0');
     return `${day}.${month}.${date.getFullYear()}`;
 }
+
+function loadResults() {
+    try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) {
+            return [];
+        }
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) {
+            return [];
+        }
+        return parsed.filter(
+            (item) =>
+                item &&
+                typeof item.moves === 'number' &&
+                Number.isFinite(item.moves) &&
+                typeof item.date === 'string',
+        );
+    } catch (error) {
+        return [];
+    }
+}
+
+function sortResults(results) {
+    return results.slice().sort((a, b) => {
+        if (a.moves !== b.moves) {
+            return a.moves - b.moves;
+        }
+        return new Date(a.date).getTime() - new Date(b.date).getTime();
+    });
+}
+
+function saveResult(moves) {
+    const results = loadResults();
+    results.push({ moves, date: new Date().toISOString() });
+    const top = sortResults(results).slice(0, MAX_RESULTS);
+    try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(top));
+    } catch (error) {
+
+    }
+}
