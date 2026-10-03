@@ -100,3 +100,78 @@ function saveResult(moves) {
 
     }
 }
+
+function createModal() {
+    const overlay = el('div', 'modal-overlay');
+    overlay.hidden = true;
+
+    const dialog = el('div', 'modal');
+    dialog.setAttribute('role', 'dialog');
+    dialog.setAttribute('aria-modal', 'true');
+    dialog.tabIndex = -1;
+
+    const content = el('div', 'modal__content');
+    dialog.append(content);
+    overlay.append(dialog);
+
+    let isOpen = false;
+    let closeCallback = null;
+
+    function close() {
+        if (!isOpen) {
+            return;
+        }
+        isOpen = false;
+        overlay.hidden = true;
+        document.body.classList.remove('modal-open');
+
+        const callback = closeCallback;
+        closeCallback = null;
+        if (typeof callback === 'function') {
+            callback();
+        }
+    }
+
+    function open(config) {
+        clearNode(content);
+
+        if (config.title) {
+            content.append(el('h2', 'modal__title', config.title));
+        }
+        if (config.body) {
+            content.append(config.body);
+        }
+        if (Array.isArray(config.actions) && config.actions.length > 0) {
+            const footer = el('div', 'modal__actions');
+            config.actions.forEach((actionButton) => footer.append(actionButton));
+            content.append(footer);
+        }
+
+        closeCallback = typeof config.onClose === 'function' ? config.onClose : null;
+        isOpen = true;
+        overlay.hidden = false;
+        document.body.classList.add('modal-open');
+        dialog.focus();
+    }
+
+    overlay.addEventListener('click', (event) => {
+        if (event.target === overlay) {
+            close();
+        }
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (isOpen && event.key === 'Escape') {
+            event.preventDefault();
+            close();
+        }
+    });
+
+    document.body.append(overlay);
+
+    return {
+        open,
+        close,
+        isOpen: () => isOpen,
+    };
+}
