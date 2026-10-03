@@ -1,0 +1,54 @@
+:root {
+    --bg-color: #0c2a3d;
+    --text: #cffafe;
+    --text-muted: #67e8f9;
+
+    --btn-border: rgba(34, 211, 238, 0.4);
+    --btn-bg: rgba(34, 211, 238, 0.12);
+    --btn-bg-hover: rgba(34, 211, 238, 0.24);
+
+    --btn-primary-from: #06b6d4;
+    --btn-primary-to: #3b82f6;
+    --btn-primary-from-hover: #0891b2;
+    --btn-primary-to-hover: #2563eb;
+    --btn-primary-text: #ffffff;
+
+    --focus: #22d3ee;
+
+    --card-back-from: #06b6d4;
+    --card-back-to: #3b82f6;
+    --card-back-border: rgba(255, 255, 255, 0.25);
+    --card-back-inner-shadow: rgba(255, 255, 255, 0.08);
+    --card-back-q: rgba(255, 255, 255, 0.4);
+    --card-front-bg: #ffffff;
+    --card-front-border: #a5f3fc;
+    --card-matched-bg: #cffafe;
+    --card-matched-border: #22d3ee;
+
+    --overlay-bg: rgba(5, 22, 33, 0.78);
+    --modal-bg: #0c2a3d;
+    --modal-border: rgba(34, 211, 238, 0.25);
+    --modal-shadow: rgba(0, 0, 0, 0.5);
+
+    --table-border: rgba(34, 211, 238, 0.2);
+    --table-th: #67e8f9;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Roboto, system-ui, -apple-system, sans-serif;
+    background: var(--bg-color);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+}
