@@ -175,3 +175,35 @@ function createModal() {
         isOpen: () => isOpen,
     };
 }
+
+const app = el('div', 'app');
+
+const header = el('header', 'header');
+const headerTitle = el('h1', 'header__title', 'Memory Game');
+const headerActions = el('div', 'header__actions');
+const newGameButton = button('btn btn--primary', 'Новая игра');
+const leaderboardButton = button('btn', 'Таблица лидеров');
+headerActions.append(newGameButton, leaderboardButton);
+header.append(headerTitle, headerActions);
+
+const movesValueEl = el('span', 'stat__value', '0');
+const movesStat = el('div', 'stat');
+movesStat.append(el('span', 'stat__label', 'Ходы:'), movesValueEl);
+
+const pairsValueEl = el('span', 'stat__value', `0 / ${PAIRS_TOTAL}`);
+const pairsStat = el('div', 'stat');
+pairsStat.append(el('span', 'stat__label', 'Найдено пар:'), pairsValueEl);
+
+const stats = el('div', 'stats');
+stats.append(movesStat, pairsStat);
+
+const board = el('div', 'board');
+
+const main = el('main', 'main');
+main.append(stats, board);
+
+app.append(header, main);
+document.body.append(app);
+
+const victoryModal = createModal();
+const leaderboardModal = createModal();
